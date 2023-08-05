@@ -6,19 +6,22 @@
 
 <script>
 import { db } from '../firebase'
-import { collection, addDoc } from 'firebase/firestore'
+import { ref, push } from 'firebase/database'
 
 export default {
     methods: {
         async createChat() {
             try {
-                const collectionReference = collection(db, 'collectionName')
-                const newChat = await addDoc(collectionReference, {
+                const chatsRef = ref(db, 'chats')
+                const newChatRef = push(chatsRef)
+                
+                await newChatRef.set({
                     createdAt: Date.now(),
                     owner: this.uid,
                     members: [this.uid],
                 })
-                console.log('Chat room created with ID:', newChat.id)
+                
+                console.log('Chat room created with key:', newChatRef.key)
             } catch (error) {
                 console.error('Error creating chat room:', error)
             }
@@ -26,6 +29,4 @@ export default {
     },
     props: ['uid']
 }
-
-
 </script>
