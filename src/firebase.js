@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -17,4 +17,5 @@ const fbApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore(fbApp);
 export const auth = getAuth(fbApp);
-export const storage = getStorage(fbApp);
+export const storage = getStorage(fbApp)
+export { RecaptchaVerifier }; 
