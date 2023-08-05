@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="container">
         <header>
             <h1>PILL'O'TALKIE</h1>
             <p>Pills of pillow talk 💖</p>
