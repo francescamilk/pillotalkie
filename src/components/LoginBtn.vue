@@ -17,6 +17,7 @@ export default defineComponent({
     },
     methods: {
         loginAnonimous() {
+            // AUTH1. function fires authentication and triggers onAuthStateChanged
             signInAnonymously(auth)
             .then(() => {
                 // Signed in
