@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>Hi {{ user.uid }}</p>
-        <button @click="auth.signOut()">ByeBye</button>
+        <button @click="auth.signOut()" class="button">ByeBye</button>
     </div>
 </template>
 
