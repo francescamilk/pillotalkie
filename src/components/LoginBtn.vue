@@ -1,16 +1,13 @@
 <template>
     <aside>
         <div>
-            <h3>Login Anon</h3>
             <button class="button" @click="loginAnonimous()">ANON</button>
         </div>
         <div>
             <div v-if="newUser">
-                <h3>SignUp Email</h3>
                 <a href="#" @click="newUser = false">Returning user?</a>
             </div>
             <div v-else>
-                <h3>LogIn Email</h3>
                 <a href="#" @click="newUser = true">New user?</a>
             </div>
             <input v-model="email" type="email" placeholder="email" class="input">
@@ -18,22 +15,21 @@
             <button @click="signInOrCreateUser()" :class="{ 'is-loading': loading }" class="button">
                 {{ newUser ? 'SIGNUP' : 'LOGIN' }}
             </button>
-            <p class="has-text-danger" v-if="errorMessage">
-                {{ errorMessage }}
-            </p>
         </div>
         <div>
-            <h3>Sign Up with Phone</h3>
-            <div v-if="!confirmationResult">
-                <input v-model="phoneNumber" type="tel" placeholder="Phone Number">
-                <button @click="sendVerificationCode">Send Code</button>
+            <div v-if="confirmationResult">
+                <input v-model="verificationCode" type="text" placeholder="Verification Code" class="input">
+                <button @click="verifyCode()" class="button">Verify</button>
             </div>
             <div v-else>
-                <input v-model="verificationCode" type="text" placeholder="Verification Code">
-                <button @click="verifyCode">Verify</button>
+                <input v-model="phoneNumber" type="tel" placeholder="Phone Number" class="input">
+                <button @click="sendVerificationCode" class="button">Send Code</button>
             </div>
-            <div id="recaptcha-container"></div> <!-- This is where reCAPTCHA will be rendered -->
+            <div id="recaptcha-container"></div>
         </div>
+        <p class="has-text-danger" v-if="errorMessage">
+            {{ errorMessage }}
+        </p>
     </aside>
 </template>
 
@@ -98,13 +94,12 @@ export default defineComponent({
                 const userCredential = await this.confirmationResult.confirm(this.verificationCode);
                 const user = userCredential.user;
                 console.log('Phone number signup successful:', user);
-                // Proceed with user handling, e.g., storing user data
             } catch (error) {
                 console.error('Error verifying code:', error);
             }
         },
         onSignInSubmit() {
-            // Handle reCAPTCHA solved event if needed
-        }    }
-    })
+        }    
+    }
+})
 </script>
