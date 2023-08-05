@@ -1,16 +1,14 @@
 <template>
-    <div id="ap">
+    <div id="app">
         <header>
             <h1>PILL'O'TALKIE</h1>
             <p>Pills of pillow talk 💖</p>
         </header>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-// import { auth } from './firebase'
-// console.log(auth)
-
 export default {
     name: 'App',
     components: {
