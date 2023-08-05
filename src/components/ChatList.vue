@@ -5,9 +5,14 @@
 </template>
 
 <script>
-import { getDatabase, ref, push, set } from 'firebase/database'
+import { getDatabase, ref, push, set, onValue } from 'firebase/database'
 
 export default {
+    data() {
+        return {
+            chats: []
+        }
+    },
     methods: {
         async createChat() {
             const db = getDatabase()
@@ -18,9 +23,25 @@ export default {
                 members: [this.uid]
             }
             set(newChatRef, newChatData)
-        },
+        }
     },
-    props: ['uid']
+    props: ['uid'],
+    created() {
+        try {
+            const db = getDatabase()
+            const chatsRef = ref(db, 'chats')
+            
+            this.chats = [];
+            onValue(chatsRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const chat = childSnapshot.val()
+                    this.chats.push(chat)
+                })
+            })
+        } catch (error) {
+            console.error('Error loading chats:', error)
+        }
+    }
 }
 
 </script>
