@@ -7,11 +7,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 import LoginBtn from './LoginBtn'
 
-export default {
+export default defineComponent({    
     components: {
         LoginBtn
     }
-}
+})
 </script>
