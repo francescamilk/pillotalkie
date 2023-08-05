@@ -5,10 +5,11 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 import { auth } from '../firebase'
 import { signInAnonymously } from 'firebase/auth'
 
-export default {
+export default defineComponent({    
     data() {
         return {
             auth
@@ -26,5 +27,5 @@ export default {
             // });
         }
     }
-}
+})
 </script>
