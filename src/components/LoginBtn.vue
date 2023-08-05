@@ -15,10 +15,10 @@
             </div>
             <input v-model="email" type="email" placeholder="email" class="input">
             <input type="text" v-model="password" placeholder="password" class="input">
-            <!-- 2. add conditional loading class -->
             <button @click="signInOrCreateUser()" :class="{ 'is-loading': loading }" class="button">
                 {{ newUser ? 'SIGNUP' : 'LOGIN' }}
             </button>
+            <p class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</p>
         </div>
     </aside>
 </template>
@@ -36,8 +36,9 @@ export default defineComponent({
             email: '',
             password: '',
             newUser: false,
-            // 1. set starting loading state
-            loading: false 
+            loading: false,
+            // 1. set initial empty error
+            errorMessage: '' 
         }
     },
     methods: {
@@ -46,15 +47,20 @@ export default defineComponent({
             .then(() => {})
         },
         async signInOrCreateUser() {
-            // 3. toggle state based on status of the promise
             this.loading = true
+            this.errorMessage = ''
 
-            if (this.newUser) {
-                await createUserWithEmailAndPassword(auth, this.email, this.password)
-            } else {
-                await signInWithEmailAndPassword(auth, this.email, this.password)
+            // 2. wrap promise in a try/catch to update error
+            try {
+                if (this.newUser) {
+                    await createUserWithEmailAndPassword(auth, this.email, this.password)
+                } else {
+                    await signInWithEmailAndPassword(auth, this.email, this.password)
+                }
+            } catch(error) {
+                this.errorMessage = error.message
             }
-
+            
             this.loading = false
         }
     }
