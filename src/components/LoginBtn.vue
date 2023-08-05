@@ -5,7 +5,6 @@
             <button class="button" @click="loginAnonimous()">ANON</button>
         </div>
         <div>
-            <!-- 4. use newUser for login/signup UI -->
             <div v-if="newUser">
                 <h3>SignUp Email</h3>
                 <a href="#" @click="newUser = false">Returning user?</a>
@@ -14,11 +13,10 @@
                 <h3>LogIn Email</h3>
                 <a href="#" @click="newUser = true">New user?</a>
             </div>
-            <!-- 2. add input with a two-way data binding -->
             <input v-model="email" type="email" placeholder="email" class="input">
             <input type="text" v-model="password" placeholder="password" class="input">
-            <!-- 4. use newUser for login/signup UI -->
-            <button @click="signInOrCreateUser()" class="button">
+            <!-- 2. add conditional loading class -->
+            <button @click="signInOrCreateUser()" :class="{ 'is-loading': loading }" class="button">
                 {{ newUser ? 'SIGNUP' : 'LOGIN' }}
             </button>
         </div>
@@ -35,11 +33,11 @@ export default defineComponent({
     data() {
         return {
             auth,
-            // 1. add data properties for form values
             email: '',
             password: '',
-            // 3. state to differentiate between sign-in and sign-up
-            newUser: false 
+            newUser: false,
+            // 1. set starting loading state
+            loading: false 
         }
     },
     methods: {
@@ -47,13 +45,17 @@ export default defineComponent({
             signInAnonymously(auth)
             .then(() => {})
         },
-        // 5. async/await auth logic
         async signInOrCreateUser() {
+            // 3. toggle state based on status of the promise
+            this.loading = true
+
             if (this.newUser) {
                 await createUserWithEmailAndPassword(auth, this.email, this.password)
             } else {
                 await signInWithEmailAndPassword(auth, this.email, this.password)
             }
+
+            this.loading = false
         }
     }
 })
