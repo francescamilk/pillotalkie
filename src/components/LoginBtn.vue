@@ -1,6 +1,6 @@
 <template>
     <aside>
-        <button class="button" @click="loginAnonimous()">SignIn</button>
+        <button class="button" @click="loginAnonimous()">ANON</button>
     </aside>
 </template>
 
