@@ -1,13 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { firestorePlugin } from 'vuefire'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeScreen from './components/HomeScreen.vue'
 
 const app = createApp(App)
-
-app.use(firestorePlugin)
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +15,6 @@ const router = createRouter({
     }
   ]
 })
-
 app.use(router)
+
 app.mount('#app')
