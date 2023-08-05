@@ -1,9 +1,6 @@
 <template>
     <aside>
         <div>
-            <button class="button" @click="loginAnonimous()">ANON</button>
-        </div>
-        <div>
             <div v-if="newUser">
                 <a href="#" @click="newUser = false">Returning user?</a>
             </div>
@@ -22,7 +19,7 @@
                 <button @click="verifyCode()" class="button">Verify</button>
             </div>
             <div v-else>
-                <input v-model="phoneNumber" type="tel" placeholder="Phone Number" class="input">
+                <input v-model="phoneNumber" type="tel" placeholder="number" class="input">
                 <button @click="sendVerificationCode" class="button">Send Code</button>
             </div>
             <div id="recaptcha-container"></div>
@@ -36,7 +33,6 @@
 <script>
 import { defineComponent } from 'vue'
 import { auth, RecaptchaVerifier } from '../firebase'
-import { signInAnonymously } from 'firebase/auth'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { signInWithPhoneNumber } from 'firebase/auth'
 
@@ -55,10 +51,6 @@ export default defineComponent({
         }
     },
     methods: {
-        loginAnonimous() {
-            signInAnonymously(auth)
-            .then(() => {})
-        },
         async signInOrCreateUser() {
             this.loading = true
             this.errorMessage = ''
